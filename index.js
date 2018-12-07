@@ -4,19 +4,24 @@ const STORE = [
   {
     name: "apples", 
     checked: false,
+    display: true
   },
   {
     name: "oranges", 
     checked: false,
+    display: true
   },
   {
     name: "milk", 
     checked: true,
+    display: false,
   },
   {
     name: "bread", 
     checked: false,
+    display: true
   }
+  defaultDisplay: allItems;
 ];
 
 
@@ -35,12 +40,26 @@ function generateItemElement(item, itemIndex, template) {
     </li>`;
 }
 
+function setDisplayToAll () {
+  // this function sets all items to display: true
+  console.log('setDisplayToAll ran');
+}
+
+function setDisplayToChecked () {
+  // this function sets items with checked: true to display: false
+  console.log('set display to checked ran');
+}
+
+function getDisplayTrueItems() {
+
+}
 
 function generateShoppingItemsString(shoppingList) {
   console.log("Generating shopping list element");
+  // need to get list of items with display set to true
+  // getDisplayTrueItems();
 
-  const items = shoppingList.map((item, index) => generateItemElement(item, index));
-  
+  const items = shoppingList.map((item, index) => generateItemElement(item, index));  
   return items.join("");
 }
 
@@ -54,15 +73,6 @@ function renderShoppingList() {
   $('.js-shopping-list').html(shoppingListItemsString);
 }
 
-// this gets a list of unchecked items 
-function getListOfUnCheckedItems(items) {
-  console.log('getListOfUnCheckedItems ran');
-  console.log(items);
-  // first we need to filter out the checked items
-  const onlyUnchecked = items.filter(items => items.checked === 'true');
-  console.log(onlyUnchecked);
-
-}
 
 
 // this handles the view all/unchecked items option
@@ -70,14 +80,20 @@ function handleDisplayToggle () {
   // add event listener to that button
   $('#js-shopping-list-form').click('display-toggle', event => {
     console.log('handleDisplayToggle ran');
+
     // it ran, so now it needs to get a list of unchecked items
-    getListOfUnCheckedItems(STORE);
+   if (display-toggle checked = true) {
+     display all
+   }
+   else if (display-toggle checked = false) {
+     setDisplayToChecked();
+   }
   });
 }
 
 function addItemToShoppingList(itemName) {
   console.log(`Adding "${itemName}" to shopping list`);
-  STORE.push({name: itemName, checked: false});
+  STORE.push({name: itemName, checked: false, display: true});
 }
 
 function handleNewItemSubmit() {
