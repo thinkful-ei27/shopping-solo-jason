@@ -1,10 +1,22 @@
 'use strict';
 
 const STORE = [
-  {name: "apples", checked: false},
-  {name: "oranges", checked: false},
-  {name: "milk", checked: true},
-  {name: "bread", checked: false}
+  {
+    name: "apples", 
+    checked: false,
+  },
+  {
+    name: "oranges", 
+    checked: false,
+  },
+  {
+    name: "milk", 
+    checked: true,
+  },
+  {
+    name: "bread", 
+    checked: false,
+  }
 ];
 
 
@@ -42,6 +54,26 @@ function renderShoppingList() {
   $('.js-shopping-list').html(shoppingListItemsString);
 }
 
+// this gets a list of unchecked items 
+function getListOfUnCheckedItems(items) {
+  console.log('getListOfUnCheckedItems ran');
+  console.log(items);
+  // first we need to filter out the checked items
+  const onlyUnchecked = items.filter(items => items.checked === 'true');
+  console.log(onlyUnchecked);
+
+}
+
+
+// this handles the view all/unchecked items option
+function handleDisplayToggle () {
+  // add event listener to that button
+  $('#js-shopping-list-form').click('display-toggle', event => {
+    console.log('handleDisplayToggle ran');
+    // it ran, so now it needs to get a list of unchecked items
+    getListOfUnCheckedItems(STORE);
+  });
+}
 
 function addItemToShoppingList(itemName) {
   console.log(`Adding "${itemName}" to shopping list`);
@@ -99,6 +131,7 @@ function handleShoppingList() {
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
+  handleDisplayToggle();
 }
 
 // when the page loads, call `handleShoppingList`
