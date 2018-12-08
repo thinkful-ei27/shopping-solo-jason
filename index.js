@@ -21,8 +21,10 @@ const STORE = [
     checked: false,
     display: true
   }
-  defaultDisplay: allItems;
 ];
+
+  // set a variable to default "show all"
+  let displayAllByDefault = true;
 
 
 function generateItemElement(item, itemIndex, template) {
@@ -41,13 +43,22 @@ function generateItemElement(item, itemIndex, template) {
 }
 
 function setDisplayToAll () {
-  // this function sets all items to display: true
+
   console.log('setDisplayToAll ran');
+  // this function sets all items to display: true
+  // it pulls up STORE and foreach's them
+  //for (let i = 0; i < STORE.length; i++) {
+   // STORE[i]['display'] = true;
+     // console.log(STORE[i]);
+  //});
+
 }
 
 function setDisplayToChecked () {
   // this function sets items with checked: true to display: false
   console.log('set display to checked ran');
+
+
 }
 
 function getDisplayTrueItems() {
@@ -73,20 +84,20 @@ function renderShoppingList() {
   $('.js-shopping-list').html(shoppingListItemsString);
 }
 
-
-
 // this handles the view all/unchecked items option
 function handleDisplayToggle () {
   // add event listener to that button
-  $('#js-shopping-list-form').click('display-toggle', event => {
+  $('#js-shopping-list-form').click('display-toggle', function(event) {
     console.log('handleDisplayToggle ran');
 
-    // it ran, so now it needs to get a list of unchecked items
-   if (display-toggle checked = true) {
-     display all
-   }
-   else if (display-toggle checked = false) {
-     setDisplayToChecked();
+    // change the status of displayAllByDefault
+    displayAllByDefault = !displayAllByDefault;
+    console.log('the default display is set to all? is ' + displayAllByDefault);
+
+   if (displayAllByDefault === true) {
+    setDisplayToAll();
+   } else if (displayAllByDefault === false) {
+    setDisplayToChecked();
    }
   });
 }
@@ -124,7 +135,6 @@ function handleItemCheckClicked() {
 function toggleCheckedForListItem(itemIndex) {
     STORE[itemIndex].checked = !STORE[itemIndex].checked;
 }
-
 
 function handleDeleteItemClicked() {
   $('.js-shopping-list').on('click', `.js-item-delete`, event => {
