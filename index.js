@@ -43,8 +43,8 @@ function generateItemElement(item, itemIndex, template) {
 }
 
 function generateShoppingItemsString(shoppingList) {
-  console.log("Generating shopping list element");
-  // need to get list of items with display set to true
+  console.log("Generating shopping list elements");
+  // list of items with display set to true
     const items = shoppingList.filter(item => item['display'] === true).map((item, index) => generateItemElement(item, index));  
     return items.join("");
   }
@@ -70,9 +70,9 @@ function setDisplayToAll () {
 }
 
 
-function setDisplayToChecked () {
+function setDisplayToUnChecked () {
   // this function sets items with checked: true to display: false
-  console.log('set display to checked ran');
+  console.log('setDisplayToUnChecked ran');
   for (let i = 0; i < STORE.length; i++) {
     if(STORE[i]['checked'] === true) { 
       STORE[i]['display'] = false;
@@ -84,7 +84,7 @@ function setDisplayToChecked () {
 // this handles the view all/unchecked items option
 function handleDisplayToggle () {
   // add event listener to that button
-  $('#js-shopping-list-form').click('display-toggle', function(event) {
+  $('#js-shopping-list-form').click('.display-toggle', function(event) {
     console.log('handleDisplayToggle ran');
 
     // change the status of displayAllByDefault
@@ -94,7 +94,7 @@ function handleDisplayToggle () {
    if (displayAllByDefault === true) {
     setDisplayToAll();
    } else if (displayAllByDefault === false) {
-    setDisplayToChecked();
+    setDisplayToUnChecked();
    }
    renderShoppingList();
   });
@@ -106,7 +106,7 @@ function addItemToShoppingList(itemName) {
 }
 
 function handleNewItemSubmit() {
-  $('#js-shopping-list-form').submit(function(event) {
+  $('#js-shopping-list-form').submit('.js-shopping-list-entry', function(event) {
     event.preventDefault();
     console.log('`handleNewItemSubmit` ran');
     const newItemName = $('.js-shopping-list-entry').val();
@@ -124,18 +124,19 @@ function getItemIndexFromElement(item) {
 }
 
 function handleItemCheckClicked() {
-  $('.js-shopping-list').on('click', `.js-item-toggle`, event => {
+  $('.js-shopping-list').on('click', '.js-item-toggle', event => {
     const itemIndex = getItemIndexFromElement(event.currentTarget);
     toggleCheckedForListItem(itemIndex);
     renderShoppingList();
   });
 }
+
 function toggleCheckedForListItem(itemIndex) {
     STORE[itemIndex].checked = !STORE[itemIndex].checked;
 }
 
 function handleDeleteItemClicked() {
-  $('.js-shopping-list').on('click', `.js-item-delete`, event => {
+  $('.js-shopping-list').on('click', '.js-item-delete', event => {
       const itemIndex = getItemIndexFromElement(event.currentTarget);
       deleteItem(itemIndex);
       renderShoppingList();
@@ -144,6 +145,13 @@ function handleDeleteItemClicked() {
 
 function deleteItem(index) {
   STORE.splice(index, 1);
+}
+
+function handleSearchItems() {
+  $('.js-shopping-list-form').on('click', '.search-item', event => {
+    event.preventDefault();
+    console.log('you entered a search inquiry');
+  });
 }
 
 // this function will be our callback when the page loads. it's responsible for
@@ -156,6 +164,7 @@ function handleShoppingList() {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleDisplayToggle();
+  handleSearchItems();
 }
 
 // when the page loads, call `handleShoppingList`
