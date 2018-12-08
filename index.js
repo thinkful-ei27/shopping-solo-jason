@@ -14,7 +14,7 @@ const STORE = [
   {
     name: "milk", 
     checked: true,
-    display: false,
+    display: true,
   },
   {
     name: "bread", 
@@ -28,6 +28,7 @@ const STORE = [
 
 
 function generateItemElement(item, itemIndex, template) {
+  if (item.display === true) {
   return `
     <li class="js-item-index-element" data-item-index="${itemIndex}">
       <span class="shopping-item js-shopping-item ${item.checked ? "shopping-item__checked" : ''}">${item.name}</span>
@@ -40,39 +41,35 @@ function generateItemElement(item, itemIndex, template) {
         </button>
       </div>
     </li>`;
+  }
 }
 
 function setDisplayToAll () {
-
   console.log('setDisplayToAll ran');
   // this function sets all items to display: true
-  // it pulls up STORE and foreach's them
-  //for (let i = 0; i < STORE.length; i++) {
-   // STORE[i]['display'] = true;
-     // console.log(STORE[i]);
-  //});
-
+  for (let i = 0; i < STORE.length; i++) {
+    STORE[i]['display'] = true;
+    console.log(STORE[i]);
+  };
 }
 
 function setDisplayToChecked () {
   // this function sets items with checked: true to display: false
   console.log('set display to checked ran');
-
-
-}
-
-function getDisplayTrueItems() {
-
+  for (let i = 0; i < STORE.length; i++) {
+    if(STORE[i]['checked'] === true) { 
+      STORE[i]['display'] = false;
+      console.log(STORE[i]);
+    }
+  };
 }
 
 function generateShoppingItemsString(shoppingList) {
   console.log("Generating shopping list element");
   // need to get list of items with display set to true
-  // getDisplayTrueItems();
-
-  const items = shoppingList.map((item, index) => generateItemElement(item, index));  
-  return items.join("");
-}
+    const items = shoppingList.map((item, index) => generateItemElement(item, index));  
+    return items.join("");
+  }
 
 
 function renderShoppingList() {
