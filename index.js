@@ -23,12 +23,11 @@ const STORE = [
   }
 ];
 
-  // set a variable to default "show all"
-  let displayAllByDefault = true;
+// set a variable to default "show all"
+let displayAllByDefault = true;
 
 
 function generateItemElement(item, itemIndex, template) {
-  if (item.display === true) {
   return `
     <li class="js-item-index-element" data-item-index="${itemIndex}">
       <span class="shopping-item js-shopping-item ${item.checked ? "shopping-item__checked" : ''}">${item.name}</span>
@@ -41,33 +40,12 @@ function generateItemElement(item, itemIndex, template) {
         </button>
       </div>
     </li>`;
-  }
-}
-
-function setDisplayToAll () {
-  console.log('setDisplayToAll ran');
-  // this function sets all items to display: true
-  for (let i = 0; i < STORE.length; i++) {
-    STORE[i]['display'] = true;
-    console.log(STORE[i]);
-  };
-}
-
-function setDisplayToChecked () {
-  // this function sets items with checked: true to display: false
-  console.log('set display to checked ran');
-  for (let i = 0; i < STORE.length; i++) {
-    if(STORE[i]['checked'] === true) { 
-      STORE[i]['display'] = false;
-      console.log(STORE[i]);
-    }
-  };
 }
 
 function generateShoppingItemsString(shoppingList) {
   console.log("Generating shopping list element");
   // need to get list of items with display set to true
-    const items = shoppingList.map((item, index) => generateItemElement(item, index));  
+    const items = shoppingList.filter(item => item['display'] === true).map((item, index) => generateItemElement(item, index));  
     return items.join("");
   }
 
@@ -79,6 +57,28 @@ function renderShoppingList() {
 
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
+}
+
+
+function setDisplayToAll () {
+  console.log('setDisplayToAll ran');
+  // this function sets all items to display: true
+  for (let i = 0; i < STORE.length; i++) {
+    STORE[i]['display'] = true;
+    console.log(STORE[i]);
+  };
+}
+
+
+function setDisplayToChecked () {
+  // this function sets items with checked: true to display: false
+  console.log('set display to checked ran');
+  for (let i = 0; i < STORE.length; i++) {
+    if(STORE[i]['checked'] === true) { 
+      STORE[i]['display'] = false;
+      console.log(STORE[i]);
+    }
+  };
 }
 
 // this handles the view all/unchecked items option
@@ -96,6 +96,7 @@ function handleDisplayToggle () {
    } else if (displayAllByDefault === false) {
     setDisplayToChecked();
    }
+   renderShoppingList();
   });
 }
 
