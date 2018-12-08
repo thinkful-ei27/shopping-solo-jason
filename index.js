@@ -84,7 +84,7 @@ function setDisplayToUnChecked () {
 // this handles the view all/unchecked items option
 function handleDisplayToggle () {
   // add event listener to that button
-  $('#js-shopping-list-form').click('.display-toggle', function(event) {
+  $('.display-toggle').click('.display-toggle', function(event) {
     console.log('handleDisplayToggle ran');
 
     // change the status of displayAllByDefault
@@ -148,9 +148,12 @@ function deleteItem(index) {
 }
 
 function handleSearchItems() {
-  $('.js-shopping-list-form').on('click', '.search-item', event => {
+  $('#js-search-field').submit('.search-item', event => {
     event.preventDefault();
     console.log('you entered a search inquiry');
+    const searchFor = $('.search-item').val();
+    console.log(`you are searching for ${searchFor}`);
+    $('.search-item').val('');
   });
 }
 
