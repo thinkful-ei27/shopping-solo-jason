@@ -26,6 +26,17 @@ const STORE = [
 // set a variable to default "show all"
 let displayAllByDefault = true;
 
+function setDisplayStatus () {
+  console.log('setDisplayStatus ran');
+  if (displayAllByDefault === true) {
+    setDisplayToAll();
+    console.log('set display to all');
+   } else if (displayAllByDefault === false) {
+    setDisplayToUnChecked();
+    console.log('set display to unchecked');
+   };
+}
+
 
 function generateItemElement(item, itemIndex, template) {
   return `
@@ -53,6 +64,7 @@ function generateShoppingItemsString(shoppingList) {
 function renderShoppingList() {
   // render the shopping list in the DOM
   console.log('`renderShoppingList` ran');
+  setDisplayStatus();
   const shoppingListItemsString = generateShoppingItemsString(STORE);
 
   // insert that HTML into the DOM
@@ -81,6 +93,7 @@ function setDisplayToUnChecked () {
   };
 }
 
+
 // this handles the view all/unchecked items option
 function handleDisplayToggle () {
   // add event listener to that button
@@ -91,11 +104,6 @@ function handleDisplayToggle () {
     displayAllByDefault = !displayAllByDefault;
     console.log('the default display is set to all? is ' + displayAllByDefault);
 
-   if (displayAllByDefault === true) {
-    setDisplayToAll();
-   } else if (displayAllByDefault === false) {
-    setDisplayToUnChecked();
-   }
    renderShoppingList();
   });
 }
