@@ -155,12 +155,23 @@ function deleteItem(index) {
   STORE.splice(index, 1);
 }
 
+function searchListFor (thisItem) {
+  console.log(`searchListFor ran, with the value of ${thisItem}`);
+ // let revisedList = STORE.filter(obj => Object.values(obj).name(val //=> val.includes(thisItem)));
+ 
+ let revisedList = STORE.filter(element => element.name.includes(thisItem));   
+  console.log(revisedList);
+  let forDisplay = generateShoppingItemsString(revisedList);
+  // insert that HTML into the DOM
+  $('.js-shopping-list').html(forDisplay);
+}
+
 function handleSearchItems() {
   $('#js-search-field').submit('.search-item', event => {
     event.preventDefault();
     console.log('you entered a search inquiry');
     const searchFor = $('.search-item').val();
-    console.log(`you are searching for ${searchFor}`);
+    searchListFor(searchFor);
     $('.search-item').val('');
   });
 }
